@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "88264361003",
+    "project_id": "smart-assault-app",
+    "storage_bucket": "smart-assault-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:88264361003:android:a3c324a352fab10c23966e",
+        "android_client_info": {
+          "package_name": "com.example.smartassaultapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "88264361003-q9apg6rorbsuhtmii3pr3hblkba9ldbd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_vhk9JFTbTmVvhy4iyePjghfeNk63Ls0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "88264361003-q9apg6rorbsuhtmii3pr3hblkba9ldbd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
