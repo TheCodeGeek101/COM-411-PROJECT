@@ -1,49 +1,84 @@
 package com.example.smartassaultapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText email,password;
+
     boolean passwordVisible;
+    private FirebaseAuth smartAssaultAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        email = findViewById(R.id.email);
-        password = findViewById(R.id.password);
 
-        password.setOnTouchListener(new View.OnTouchListener() {
+        smartAssaultAuth = FirebaseAuth.getInstance();
+
+        EditText etLoginEmail;
+        EditText etLoginPassword;
+
+        etLoginEmail = findViewById(R.id.etLoginEmail);
+        etLoginPassword = findViewById(R.id.etLoginPassword);
+
+        Button btnLogin = findViewById(R.id.btnLogin);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                authenticateSoldier();
+            }
+        });
+
+        TextView tvSwitchToRegister = findViewById(R.id.tvSwitchtoRegister);
+        tvSwitchToRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchToRegister();
+            }
+        });
+
+        etLoginPassword.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                     final int Right = 2;
                     if(motionEvent.getAction() == MotionEvent.ACTION_UP)
                     {
-                        if(motionEvent.getRawX() >= password.getRight()-password.getCompoundDrawables()[Right].getBounds().width())
+                        if(motionEvent.getRawX() >= etLoginPassword.getRight()-etLoginPassword.getCompoundDrawables()[Right].getBounds().width())
                         {
-                            int selection = password.getSelectionEnd();
+                            int selection = etLoginPassword.getSelectionEnd();
                             if(passwordVisible){
 //                                setting the password visibility off icon here
-                                password.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,R.drawable.visibility,0);
+                                etLoginPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,R.drawable.visibility,0);
 //                                hiding the password
-                                password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                etLoginPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
                                 passwordVisible = false;
                             }else {
 //                                setting the password visibility on icon here
-                                password.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,R.drawable.visibilityon,0);
+                                etLoginPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,R.drawable.visibilityon,0);
 //                                showing the password
-                                password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                                etLoginPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                                 passwordVisible = true;
                             }
-                            password.setSelection(selection);
+                            etLoginPassword.setSelection(selection);
 
                             return  true;
                         }
@@ -53,4 +88,48 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
+    private void switchToRegister() {
+        Intent intent = new Intent(this,RegisterActivity.class);
+        startActivity(intent);
+    }
+
+    private void authenticateSoldier() {
+        EditText editTextEmail = findViewById(R.id.etLoginEmail);
+        EditText editTextPassword = findViewById(R.id.etLoginPassword);
+
+        String email = editTextEmail.getText().toString();
+        String password = editTextPassword.getText().toString();
+
+        smartAssaultAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            redirectToHome();
+
+                        } else {
+                            Toast.makeText(LoginActivity.this,"Authentication Failed",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
+    }
+
+    private void redirectToHome() {
+        Intent intent  = new Intent(this,MapsActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = smartAssaultAuth.getCurrentUser();
+        if(currentUser != null){
+            currentUser.reload();
+        }
+    }
+
+
 }
