@@ -41,50 +41,37 @@ public class LoginActivity extends AppCompatActivity {
         etLoginPassword = findViewById(R.id.etLoginPassword);
 
         Button btnLogin = findViewById(R.id.btnLogin);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                authenticateSoldier();
-            }
-        });
+        btnLogin.setOnClickListener(view -> authenticateSoldier());
 
         TextView tvSwitchToRegister = findViewById(R.id.tvSwitchtoRegister);
-        tvSwitchToRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switchToRegister();
-            }
-        });
+        tvSwitchToRegister.setOnClickListener(view -> switchToRegister());
 
-        etLoginPassword.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                    final int Right = 2;
-                    if(motionEvent.getAction() == MotionEvent.ACTION_UP)
+        etLoginPassword.setOnTouchListener((view, motionEvent) -> {
+                final int Right = 2;
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP)
+                {
+                    if(motionEvent.getRawX() >= etLoginPassword.getRight()-etLoginPassword.getCompoundDrawables()[Right].getBounds().width())
                     {
-                        if(motionEvent.getRawX() >= etLoginPassword.getRight()-etLoginPassword.getCompoundDrawables()[Right].getBounds().width())
-                        {
-                            int selection = etLoginPassword.getSelectionEnd();
-                            if(passwordVisible){
+                        int selection = etLoginPassword.getSelectionEnd();
+                        if(passwordVisible){
 //                                setting the password visibility off icon here
-                                etLoginPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,R.drawable.visibility,0);
+                            etLoginPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,R.drawable.visibility,0);
 //                                hiding the password
-                                etLoginPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                                passwordVisible = false;
-                            }else {
+                            etLoginPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            passwordVisible = false;
+                        }else {
 //                                setting the password visibility on icon here
-                                etLoginPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,R.drawable.visibilityon,0);
+                            etLoginPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,R.drawable.visibilityon,0);
 //                                showing the password
-                                etLoginPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                                passwordVisible = true;
-                            }
-                            etLoginPassword.setSelection(selection);
-
-                            return  true;
+                            etLoginPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            passwordVisible = true;
                         }
+                        etLoginPassword.setSelection(selection);
+
+                        return  true;
                     }
-                return false;
-            }
+                }
+            return false;
         });
 
     }
@@ -102,22 +89,19 @@ public class LoginActivity extends AppCompatActivity {
         String password = editTextPassword.getText().toString();
 
         smartAssaultAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            redirectToHome();
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        redirectToHome();
 
-                        } else {
-                            Toast.makeText(LoginActivity.this,"Authentication Failed",Toast.LENGTH_LONG).show();
-                        }
+                    } else {
+                        Toast.makeText(LoginActivity.this,"Authentication Failed",Toast.LENGTH_LONG).show();
                     }
                 });
 
     }
 
     private void redirectToHome() {
-        Intent intent  = new Intent(this,MapsActivity.class);
+        Intent intent  = new Intent(this,MainActivity.class);
         startActivity(intent);
         finish();
     }
