@@ -41,17 +41,17 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
         switch (transitionType){
             case Geofence.GEOFENCE_TRANSITION_ENTER:
                 Toast.makeText(context, "Inmate has arrived your vicinity!...", Toast.LENGTH_SHORT).show();
-                notificationHelper.sendHighPriorityNotification("Inmate entered your vicinity!...","",MapsActivity.class);
+                notificationHelper.sendHighPriorityNotification("Inmate entered your vicinity!...","",MapsFragment.class);
                 break;
 
             case Geofence.GEOFENCE_TRANSITION_DWELL:
                 Toast.makeText(context, "Inmate is within your vicinity!...", Toast.LENGTH_SHORT).show();
-                notificationHelper.sendHighPriorityNotification("Inmate is within the vicinity!...","",MapsActivity.class);
+                notificationHelper.sendHighPriorityNotification("Inmate is within the vicinity!...","",MapsFragment.class);
                 break;
 
             case Geofence.GEOFENCE_TRANSITION_EXIT:
                 Toast.makeText(context, "Inmate left your vicinity!...", Toast.LENGTH_SHORT).show();
-                notificationHelper.sendHighPriorityNotification("Response team has left the vicinity!...","",MapsActivity.class);
+                notificationHelper.sendHighPriorityNotification("Response team has left the vicinity!...","",MapsFragment.class);
                 break;
         }
     }

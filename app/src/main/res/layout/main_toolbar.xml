@@ -37,10 +37,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="@string/app_name"
+                android:text="iMillitary"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="22dp"
+                android:textSize="15dp"
                 android:textStyle="bold" />
         </com.google.android.material.navigation.NavigationView>
     </FrameLayout>

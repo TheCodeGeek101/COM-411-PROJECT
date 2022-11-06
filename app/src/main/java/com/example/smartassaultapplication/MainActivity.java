@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 //
         bottomNavigationView = findViewById(R.id.btnNav);
 //
-//        fragmentReplace(new HomeFragment());
+        fragmentReplace(new HomeFragment());
 //            drawerLayout = findViewById(R.id.my_drawer_layout);
 //            actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
 //
