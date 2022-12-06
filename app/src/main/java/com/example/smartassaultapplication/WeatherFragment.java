@@ -7,12 +7,9 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.os.Looper;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +17,24 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class WeatherFragment extends Fragment {
@@ -64,6 +71,7 @@ public class WeatherFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override public void onClick(View view)
                     {
+                        getWeatherUpdate();
                         // check condition
                         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission
                                         .ACCESS_FINE_LOCATION)
@@ -135,65 +143,53 @@ public class WeatherFragment extends Fragment {
                 LocationManager.NETWORK_PROVIDER)) {
             // When location service is enabled
             // Get last location
-            client.getLastLocation().addOnSuccessListener(
-                    new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            // Initialize location
-//                            location = task.getResult();
-                            // Check condition
-                            if (location != null) {
-                                // When location result is not
-                                // null set latitude
-                                tvLatitude.setText(String.valueOf(location.getLatitude()));
-                                // set longitude
-                                tvLongitude.setText(String.valueOf(location.getLongitude()));
-                            }
-                            else {
-                                // When location result is null
-                                // initialize location request
-                                LocationRequest locationRequest
-                                        = new LocationRequest()
-                                        .setPriority(
-                                                LocationRequest
-                                                        .PRIORITY_HIGH_ACCURACY)
-                                        .setInterval(10000)
-                                        .setFastestInterval(1000).setNumUpdates(1);
-
-                                // Initialize location call back
-                                LocationCallback locationCallback = new LocationCallback() {
-                                    @Override
-                                    public void
-                                    onLocationResult(LocationResult locationResult)
-                                    {
-                                        // Initialize
-                                        // location
-                                        Location location1 = locationResult.getLastLocation();
-                                        // Set latitude
-                                        tvLatitude.setText(String.valueOf(location1.getLatitude()));
-                                        // Set longitude
-                                        tvLongitude.setText(String.valueOf(location1.getLongitude()));
-                                    }
-                                };
-
-                                // Request location updates
-                                client.requestLocationUpdates(
-                                        locationRequest,
-                                        locationCallback,
-                                        Looper.myLooper());
-                            }
+            client.getLastLocation().addOnCompleteListener(
+                    task -> {
+                        // Initialize location
+                        Location location = task.getResult();
+                        // Check condition
+                        if (location != null) {
+                            // When location result is not
+                            // null set latitude
+                            tvLatitude.setText(String.valueOf(location.getLatitude()));
+                            // set longitude
+                            tvLongitude.setText(String.valueOf(location.getLongitude()));
                         }
+                        else {
+                            // When location result is null
+                            // initialize location request
+                            LocationRequest locationRequest
+                                    = new LocationRequest()
+                                    .setPriority(
+                                            LocationRequest
+                                                    .PRIORITY_HIGH_ACCURACY)
+                                    .setInterval(10000)
+                                    .setFastestInterval(1000).setNumUpdates(1);
 
-                    }
-//        {
-//                        @Override
-//                        public void onComplete(
-//                                @NonNull Task<Location> task)
-//                        {
-//
-//
-//                    }
-                    );
+                            // Initialize location call back
+                            LocationCallback locationCallback = new LocationCallback() {
+                                @Override
+                                public void
+                                onLocationResult(LocationResult locationResult)
+                                {
+                                    // Initialize
+                                    // location
+                                    Location location1 = locationResult.getLastLocation();
+//                                    getWeatherUpdate(location1);
+                                    // Set latitude
+                                    tvLatitude.setText(String.valueOf(location1.getLatitude()));
+                                    // Set longitude
+                                    tvLongitude.setText(String.valueOf(location1.getLongitude()));
+                                }
+                            };
+
+                            // Request location updates
+                            client.requestLocationUpdates(
+                                    locationRequest,
+                                    locationCallback,
+                                    Looper.myLooper());
+                        }
+                    });
         }
         else {
             // When location service is not enabled
@@ -204,6 +200,52 @@ public class WeatherFragment extends Fragment {
 //                                    .ACTION_LOCATION_SOURCE_SETTINGS)
 //                            .setFlags(
 //                                    Intent.FLAG_ACTIVITY_NEW_TASK));
+        }
+    }
+    public void getWeatherUpdate(){
+
+    }
+    public void onViewCreated(View view, Bundle savedInstanceState)
+    {
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8)
+        {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            //your codes here
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url("https://weatherbit-v1-mashape.p.rapidapi.com/forecast/minutely?lat=35.5&lon=-78.5")
+                    .get()
+                    .addHeader("X-RapidAPI-Key", "2aedfdb066msh390ca16b89d94c2p1c60e3jsn70ba6f92dcca")
+                    .addHeader("X-RapidAPI-Host", "weatherbit-v1-mashape.p.rapidapi.com")
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+                if(response.isSuccessful()){
+                    String responseData =response.body().string();
+                    System.out.println(responseData);
+                    Log.d("Response body:",responseData);
+
+//                    Toast.makeText(getActivity(),response.body().toString(),Toast.LENGTH_SHORT);
+                    JSONObject json = new JSONObject(responseData);
+                    JSONObject data = json.getJSONObject("data");
+                    String temperature = data.getString("temp");
+                    String precip = data.getString("precip");
+                    String time = data.getString("timestamp_local");
+                    Log.d("temperature",temperature);
+                    Log.d("time",time);
+                    Log.d("precip",precip);
+                }
+                else{
+                    Log.d("Task not successful","error");
+                }
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

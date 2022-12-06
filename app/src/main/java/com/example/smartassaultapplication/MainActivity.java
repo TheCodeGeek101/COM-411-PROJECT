@@ -3,6 +3,7 @@ package com.example.smartassaultapplication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,7 +39,10 @@ public class MainActivity extends AppCompatActivity {
         private FirebaseAuth smartAssaultAuth;
         private DatabaseReference mDatabase;
          BottomNavigationView bottomNavigationView;
-//        DrawerLayout drawerLayout;
+        DrawerLayout drawerLayout;
+        NavigationView navigationView;
+        Toolbar toolbar;
+
 //    public ActionBarDrawerToggle actionBarDrawerToggle;
 
         @Override
@@ -49,8 +54,16 @@ public class MainActivity extends AppCompatActivity {
 //
         fragmentReplace(new HomeFragment());
 //            drawerLayout = findViewById(R.id.my_drawer_layout);
-//            actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
+//            navigationView = findViewById(R.id.nav_drawer);
+//           toolbar = findViewById(R.id.toobar);
 //
+//            setSupportActionBar(toolbar);
+//
+//
+//           actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,R.string.nav_open, R.string.nav_close);
+//           drawerLayout.addDrawerListener(actionBarDrawerToggle);
+//           actionBarDrawerToggle.syncState();
+
 //            // pass the Open and Close toggle for the drawer layout listener
 //            // to toggle the button
 //            drawerLayout.addDrawerListener(actionBarDrawerToggle);

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_gravity="center">
+
+    <androidx.appcompat.widget.AppCompatRadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/map_type_none"
+        android:textSize="16sp"
+        android:layout_weight="1"
+        android:onClick="chooseMapType"
+        android:text="None"
+        android:buttonTint="@color/colorMainBackground"
+        />
+
+    <androidx.appcompat.widget.AppCompatRadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/map_type_hybrid"
+        android:textSize="16sp"
+        android:layout_weight="1"
+        android:onClick="chooseMapType"
+        android:text="Hybrid"
+        android:buttonTint="@color/colorMainBackground"
+        />
+
+    <androidx.appcompat.widget.AppCompatRadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/map_type_terrain"
+        android:textSize="16sp"
+        android:layout_weight="1"
+        android:onClick="chooseMapType"
+        android:text="Terrain"
+        android:buttonTint="@color/colorMainBackground"
+        />
+
+    <androidx.appcompat.widget.AppCompatRadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/map_type_satellite"
+        android:textSize="16sp"
+        android:layout_weight="1"
+        android:onClick="chooseMapType"
+        android:text="Sattelite"
+        android:buttonTint="@color/colorMainBackground"
+        />
+
+
+    <androidx.appcompat.widget.AppCompatRadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/map_type_normal"
+        android:textSize="16sp"
+        android:layout_weight="1"
+        android:onClick="chooseMapType"
+        android:text="Normal"
+        android:buttonTint="@color/colorMainBackground"
+        />
+
+
+
+</LinearLayout>

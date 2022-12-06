@@ -25,6 +25,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.smartassaultapplication.databinding.FragmentMapsBinding;
@@ -33,12 +34,15 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -92,7 +96,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     private String[] likelyPlaceAddresses;
     private List[] likelyPlaceAttributions;
     private LatLng[] likelyPlaceLatLngs;
-
+    Marker mCurrLocationMarker;
+    private final int requestPermissionCode = 723;
+    Button btnLocation;
     public MapsFragment() {
         // Required empty public constructor
     }
@@ -121,6 +127,39 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         client = LocationServices.getFusedLocationProviderClient(
                         getActivity());
 
+         btnLocation = view.findViewById(R.id.locationButton);
+        btnLocation.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override public void onClick(View view)
+                    {
+                        // check condition
+                        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission
+                                .ACCESS_FINE_LOCATION)
+                                == PackageManager
+                                .PERMISSION_GRANTED
+                                && ContextCompat.checkSelfPermission(
+                                getActivity(),
+                                Manifest.permission
+                                        .ACCESS_COARSE_LOCATION)
+                                == PackageManager
+                                .PERMISSION_GRANTED) {
+                            // When permission is granted
+                            // Call method
+                            getCurrentLocation();
+                        }
+                        else {
+                            // When permission is not granted
+                            // Call method
+                            requestPermissions(
+                                    new String[] {
+                                            Manifest.permission
+                                                    .ACCESS_FINE_LOCATION,
+                                            Manifest.permission
+                                                    .ACCESS_COARSE_LOCATION },
+                                    100);
+                        }
+                    }
+                });
         // Initialize map fragment
         SupportMapFragment supportMapFragment=(SupportMapFragment)
                 getChildFragmentManager().findFragmentById(R.id.google_map);
@@ -128,23 +167,20 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         // Async map
         supportMapFragment.getMapAsync(googleMap -> {
             // When map is loaded
-            googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                @Override
-                public void onMapClick(LatLng latLng) {
-                    // When clicked on map
-                    // Initialize marker options
-                    MarkerOptions markerOptions=new MarkerOptions();
-                    // Set position of marker
-                    markerOptions.position(latLng);
-                    // Set title of marker
-                    markerOptions.title(latLng.latitude+" : "+latLng.longitude);
-                    // Remove all marker
-                    googleMap.clear();
-                    // Animating to zoom the marker
-                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,10));
-                    // Add marker on map
-                    googleMap.addMarker(markerOptions);
-                }
+            googleMap.setOnMapClickListener(latLng -> {
+                // When clicked on map
+                // Initialize marker options
+                MarkerOptions markerOptions=new MarkerOptions();
+                // Set position of marker
+                markerOptions.position(latLng);
+                // Set title of marker
+                markerOptions.title(latLng.latitude+" : "+latLng.longitude);
+                // Remove all marker
+                googleMap.clear();
+                // Animating to zoom the marker
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,10));
+                // Add marker on map
+                googleMap.addMarker(markerOptions);
             });
         });
 
@@ -170,42 +206,21 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     }
 
     @SuppressLint("MissingPermission")
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    public void onMapReady(@NonNull GoogleMap googleMap) {
-        mMap = googleMap;
-        if (ContextCompat.checkSelfPermission(
-                getActivity(),
-                Manifest.permission
-                        .ACCESS_FINE_LOCATION)
-                == PackageManager
-                .PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(
-                getActivity(),
-                Manifest.permission
-                        .ACCESS_COARSE_LOCATION)
-                == PackageManager
-                .PERMISSION_GRANTED) {
-            // When permission is granted
-            // Call method
-            mMap.setMyLocationEnabled(true);
-            getCurrentLocation();
-        }
-        else {
-            // When permission is not granted
-            // Call method
-            requestPermissions(
-                    new String[] {
-                            Manifest.permission
-                                    .ACCESS_FINE_LOCATION,
-                            Manifest.permission
-                                    .ACCESS_COARSE_LOCATION },
-                    100);
-        }
+    public void onMapReady(final GoogleMap map) {
+        this.map=map;
+        getCurrentLocation();
+
+        map.setOnInfoWindowClickListener((GoogleMap.OnInfoWindowClickListener) getActivity());
+        map.setMyLocationEnabled(true);
+//        locMgr=(LocationManager)getSystemService(LOCATION_SERVICE);
+//        crit.setAccuracy(Criteria.ACCURACY_FINE);
+//        follow();
+
+
 
 
     }
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onRequestPermissionsResult(
             int requestCode, @NonNull String[] permissions,
@@ -231,15 +246,13 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                     .show();
         }
     }
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @SuppressLint("MissingPermission")
     private void getCurrentLocation()
     {
         // Initialize Location manager
         LocationManager locationManager
-                = (LocationManager)getActivity()
-                .getSystemService(
-                        Context.LOCATION_SERVICE);
+                = (LocationManager)getActivity().getSystemService(
+                Context.LOCATION_SERVICE);
         // Check condition
         if (locationManager.isProviderEnabled(
                 LocationManager.GPS_PROVIDER)
@@ -248,62 +261,56 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             // When location service is enabled
             // Get last location
             client.getLastLocation().addOnCompleteListener(
-                    new OnCompleteListener<Location>() {
+                    task -> {
+                        // Initialize location
+                        Location location = task.getResult();
+                        // Check condition
+                        if (location != null) {
+                            // When location result is not
+                            // null set latitude
+//                            tvLatitude.setText(String.valueOf(location.getLatitude()));
+                            // set longitude
+//                            tvLongitude.setText(String.valueOf(location.getLongitude()));
+                        }
+                        else {
+                            // When location result is null
+                            // initialize location request
+                            LocationRequest locationRequest
+                                    = new LocationRequest()
+                                    .setPriority(
+                                            LocationRequest
+                                                    .PRIORITY_HIGH_ACCURACY)
+                                    .setInterval(10000)
+                                    .setFastestInterval(1000).setNumUpdates(1);
 
-                        @Override
-                        public void onComplete(
-                                @NonNull Task<Location> task)
-                        {
+                            // Initialize location call back
+                            LocationCallback locationCallback = new LocationCallback() {
+                                @Override
+                                public void
+                                onLocationResult(LocationResult locationResult)
+                                {
+                                    // Initialize
+                                    // location
+                                    Location location1 = locationResult.getLastLocation();
+                                    LatLng latLng = new LatLng(location1.getLatitude(), location1.getLongitude());
+                                    MarkerOptions markerOptions = new MarkerOptions();
+                                    markerOptions.position(latLng);
+                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                                    mCurrLocationMarker = mMap.addMarker(markerOptions);
+                                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                                    mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+                                    // Set latitude
+//                                    tvLatitude.setText(String.valueOf(location1.getLatitude()));
+                                    // Set longitude
+//                                    tvLongitude.setText(String.valueOf(location1.getLongitude()));
+                                }
+                            };
 
-                            // Initialize location
-                            Location location = task.getResult();
-                            // Check condition
-                            if (location != null) {
-                                // When location result is not
-                                // null set latitude
-                                map.moveCamera(
-                                        CameraUpdateFactory.newLatLngZoom(
-                                                new LatLng(
-                                                        location.getLatitude(),
-                                                        location.getLongitude()),
-                                                17));
-                                Log.d(TAG,"latitude:" + location.getLatitude());
-                                Log.d(TAG,"longitude:" + location.getLongitude());
-                            }
-                            else {
-                                // When location result is null
-                                // initialize location request
-                                LocationRequest locationRequest
-                                        = new LocationRequest()
-                                        .setPriority(
-                                                LocationRequest
-                                                        .PRIORITY_HIGH_ACCURACY)
-                                        .setInterval(10000)
-                                        .setFastestInterval(
-                                                1000)
-                                        .setNumUpdates(1);
-
-                                // Initialize location call back
-                                LocationCallback locationCallback = new LocationCallback() {
-                                    @Override
-                                    public void
-                                    onLocationResult(
-                                            LocationResult locationResult)
-                                    {
-                                        // Initialize
-                                        // location
-                                        Location location1 = locationResult.getLastLocation();
-                                        // Set latitude
-
-                                    }
-                                };
-
-                                // Request location updates
-                                client.requestLocationUpdates(
-                                        locationRequest,
-                                        locationCallback,
-                                        Looper.myLooper());
-                            }
+                            // Request location updates
+                            client.requestLocationUpdates(
+                                    locationRequest,
+                                    locationCallback,
+                                    Looper.myLooper());
                         }
                     });
         }
@@ -312,7 +319,29 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             // open location setting
 //            startActivity(
 //                    new Intent(
-//                            Settings.ACTION_LOCATION_SOURCE_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+//                            Settings
+//                                    .ACTION_LOCATION_SOURCE_SETTINGS)
+//                            .setFlags(
+//                                    Intent.FLAG_ACTIVITY_NEW_TASK));
         }
+
     }
+
+
+//    public boolean checkPermission() {
+//        int firstPermissionResult = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION);
+//        int secondPermissionResult = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION);
+//        return firstPermissionResult == PackageManager.PERMISSION_GRANTED && secondPermissionResult == PackageManager.PERMISSION_GRANTED;
+//    }
+//
+//    private void requestPermission() {
+//        requestPermissions(
+//                new String[] {
+//                        Manifest.permission.ACCESS_FINE_LOCATION,
+//                        Manifest.permission.ACCESS_COARSE_LOCATION
+//                },
+//                requestPermissionCode
+//        );
+//    }
+
 }

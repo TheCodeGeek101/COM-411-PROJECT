@@ -14,4 +14,6 @@
     <color name="colorHintText">#808080</color>
     <color name="colorIconTint">#198D33</color>
     <color name="colorDrawer">#CCFFD1</color>
+    <color name="toolbar">#00008577</color>
+
 </resources>
