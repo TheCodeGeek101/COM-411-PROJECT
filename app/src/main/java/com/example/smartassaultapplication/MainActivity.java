@@ -1,38 +1,19 @@
 package com.example.smartassaultapplication;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,24 +34,6 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.btnNav);
 //
         fragmentReplace(new HomeFragment());
-//            drawerLayout = findViewById(R.id.my_drawer_layout);
-//            navigationView = findViewById(R.id.nav_drawer);
-//           toolbar = findViewById(R.id.toobar);
-//
-//            setSupportActionBar(toolbar);
-//
-//
-//           actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,R.string.nav_open, R.string.nav_close);
-//           drawerLayout.addDrawerListener(actionBarDrawerToggle);
-//           actionBarDrawerToggle.syncState();
-
-//            // pass the Open and Close toggle for the drawer layout listener
-//            // to toggle the button
-//            drawerLayout.addDrawerListener(actionBarDrawerToggle);
-//            actionBarDrawerToggle.syncState();
-//
-//            // to make the Navigation drawer icon always appear on the action bar
-//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
