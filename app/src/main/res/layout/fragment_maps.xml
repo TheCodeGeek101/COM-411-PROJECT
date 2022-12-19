@@ -18,13 +18,11 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/locationButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_baseline_location_searching_24"
-            />
 
     </LinearLayout>
-
+    <Button
+        android:id="@+id/button_current_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="loc" />
 </RelativeLayout>

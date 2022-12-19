@@ -20,6 +20,7 @@ public class Soldier {
         this.email=email;
     }
     public static Builder builder(){
+
         return new Builder();
     }
 

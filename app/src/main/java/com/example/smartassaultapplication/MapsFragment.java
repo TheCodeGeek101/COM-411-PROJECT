@@ -2,31 +2,22 @@ package com.example.smartassaultapplication;
 
 import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.example.smartassaultapplication.databinding.FragmentMapsBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -45,18 +36,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.DexterBuilder;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
-import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.util.List;
 
@@ -123,43 +104,54 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(@NonNull  LayoutInflater inflater, @NonNull ViewGroup container,@NonNull  Bundle savedInstanceState) {
         // Initialize view
+
         View view=inflater.inflate(R.layout.fragment_maps, container, false);
         client = LocationServices.getFusedLocationProviderClient(
                         getActivity());
 
-         btnLocation = view.findViewById(R.id.locationButton);
-        btnLocation.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override public void onClick(View view)
-                    {
-                        // check condition
-                        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission
-                                .ACCESS_FINE_LOCATION)
-                                == PackageManager
-                                .PERMISSION_GRANTED
-                                && ContextCompat.checkSelfPermission(
-                                getActivity(),
-                                Manifest.permission
-                                        .ACCESS_COARSE_LOCATION)
-                                == PackageManager
-                                .PERMISSION_GRANTED) {
-                            // When permission is granted
-                            // Call method
-                            getCurrentLocation();
-                        }
-                        else {
-                            // When permission is not granted
-                            // Call method
-                            requestPermissions(
-                                    new String[] {
-                                            Manifest.permission
-                                                    .ACCESS_FINE_LOCATION,
-                                            Manifest.permission
-                                                    .ACCESS_COARSE_LOCATION },
-                                    100);
-                        }
-                    }
-                });
+//         btnLocation = view.findViewById(R.id.locationButton);
+        Button button = view.findViewById(R.id.button_current_location);
+        button.setVisibility(View.VISIBLE);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Center the map on the device's current location
+                getDeviceLocation();
+            }
+        });
+
+//        btnLocation.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override public void onClick(View view)
+//                    {
+//                        // check condition
+//                        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission
+//                                .ACCESS_FINE_LOCATION)
+//                                == PackageManager
+//                                .PERMISSION_GRANTED
+//                                && ContextCompat.checkSelfPermission(
+//                                getActivity(),
+//                                Manifest.permission
+//                                        .ACCESS_COARSE_LOCATION)
+//                                == PackageManager
+//                                .PERMISSION_GRANTED) {
+//                            // When permission is granted
+//                            // Call method
+//                            getCurrentLocation();
+//                        }
+//                        else {
+//                            // When permission is not granted
+//                            // Call method
+//                            requestPermissions(
+//                                    new String[] {
+//                                            Manifest.permission
+//                                                    .ACCESS_FINE_LOCATION,
+//                                            Manifest.permission
+//                                                    .ACCESS_COARSE_LOCATION },
+//                                    100);
+//                        }
+//                    }
+//                });
         // Initialize map fragment
         SupportMapFragment supportMapFragment=(SupportMapFragment)
                 getChildFragmentManager().findFragmentById(R.id.google_map);
@@ -244,6 +236,33 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                             "Permission denied",
                             Toast.LENGTH_SHORT)
                     .show();
+        }
+    }
+
+    private void getDeviceLocation() {
+        FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
+        try {
+            @SuppressLint("MissingPermission")
+            Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
+            locationResult.addOnCompleteListener(getActivity(), new OnCompleteListener<Location>() {
+                @Override
+                public void onComplete(@NonNull Task<Location> task) {
+                    if (task.isSuccessful()) {
+                        // Set the map's camera position to the current location of the device
+                        Location location = task.getResult();
+                        if (location != null) {
+                            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 18);
+                            map.animateCamera(cameraUpdate);
+                        }
+                    } else {
+                        Log.d(TAG, "Current location is null. Using defaults.");
+                        Log.e(TAG, "Exception: %s", task.getException());
+                    }
+                }
+            });
+        } catch (SecurityException e) {
+            Log.e("Exception: %s", e.getMessage());
         }
     }
     @SuppressLint("MissingPermission")

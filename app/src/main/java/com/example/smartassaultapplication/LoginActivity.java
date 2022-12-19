@@ -1,23 +1,17 @@
 package com.example.smartassaultapplication;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -92,7 +86,6 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         redirectToHome();
-
                     } else {
                         Toast.makeText(LoginActivity.this,"Authentication Failed",Toast.LENGTH_LONG).show();
                     }
@@ -101,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void redirectToHome() {
-        Intent intent  = new Intent(this,MainActivity.class);
+        Intent intent  = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }

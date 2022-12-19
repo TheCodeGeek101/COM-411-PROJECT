@@ -11,6 +11,20 @@
     tools:ignore="HardcodedText"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <include layout="@layout/toolbar" />
+
+        <!-- Main content -->
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
 
 <com.google.android.material.navigation.NavigationView
     android:layout_width="wrap_content"
@@ -21,14 +35,14 @@
     android:layout_gravity="start"
     />
 
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/toobar"
-        android:background="@color/toolbar"
-        android:minHeight="?attr/actionBarTheme"
-        android:theme="?attr/actionBarTheme"
-        app:navigationIcon="@drawable/ic_baseline_menu_24"
-        />
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/toobar"-->
+<!--        android:background="@color/toolbar"-->
+<!--        android:minHeight="?attr/actionBarTheme"-->
+<!--        android:theme="?attr/actionBarTheme"-->
+<!--        app:navigationIcon="@drawable/ic_baseline_menu_24"-->
+<!--        />-->
 
 </androidx.drawerlayout.widget.DrawerLayout>

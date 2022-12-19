@@ -1,9 +1,13 @@
 package com.example.smartassaultapplication;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -20,17 +24,20 @@ public class MainActivity extends AppCompatActivity {
         private FirebaseAuth smartAssaultAuth;
         private DatabaseReference mDatabase;
          BottomNavigationView bottomNavigationView;
-        DrawerLayout drawerLayout;
+//        DrawerLayout drawerLayout;
         NavigationView navigationView;
         Toolbar toolbar;
-
+    private RelativeLayout layout;
+    private DrawerLayout drawerLayout;
 //    public ActionBarDrawerToggle actionBarDrawerToggle;
 
         @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//
+//  layout = (RelativeLayout) findViewById(R.id.layout);
+//    configureNavigationDrawer();
+//    configureToolbar();
         bottomNavigationView = findViewById(R.id.btnNav);
 //
         fragmentReplace(new HomeFragment());
@@ -91,6 +98,59 @@ public class MainActivity extends AppCompatActivity {
 //
 //
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+    private void configureToolbar() {
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        ActionBar actionbar = getSupportActionBar();
+//        actionbar.setHomeAsUpIndicator(R.drawable.ic_baseline_home_24);
+//        actionbar.setDisplayHomeAsUpEnabled(true);
+    }
+    private void configureNavigationDrawer() {
+//        drawerLayout = (DrawerLayout) findViewById(R.id.my_drawer_layout);
+//        NavigationView navView = (NavigationView) findViewById(R.id.nav_drawer);
+//        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(MenuItem menuItem) {
+//                Fragment f = null;
+//                int itemId = menuItem.getItemId();
+//                if (itemId == R.id.nav_catalog) {
+//                    f = new WeatherFragment();
+//                } else if (itemId == R.id.nav_Duties) {
+//                    f = new ProfileFragment();
+//                }        if (f != null) {
+//                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//                    transaction.replace(R.id.frame, f);
+//                    transaction.commit();
+//                    drawerLayout.closeDrawers();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+
+//        NavigationView navView = findViewById(R.id.nav_drawer);
+//        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(MenuItem menuItem) {
+//                // code to handle menu item selection
+//                return true;
+//            }
+//        });
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();    switch(itemId) {
+            // Android home
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;      // manage other entries if you have it ...
+        }    return true;
     }
 
 //

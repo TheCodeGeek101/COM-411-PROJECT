@@ -1,5 +1,6 @@
 package com.example.smartassaultapplication;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -13,10 +14,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,14 +49,15 @@ public class WeatherFragment extends Fragment {
     }
 
     ActivityMainBinding binding;
-//    CardView btLocation;
+
+    Button btLocation;
     TextView tvLatitude, tvLongitude,tvtemperature,tvHumidity,tvPressure,tvGroundlevel,tvSealevel,tvCity,tvCountry,tvWeather;
     FusedLocationProviderClient client;
     private static final String TAG = MainActivity.class.getSimpleName();
     public static final String BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
     private static Retrofit retrofit = null;
     private RecyclerView recyclerView = null;
-    // insert your themoviedb.org API KEY hereprivate
+
     final static String API_KEY = "38e96032981e9dd3aea6aaabd9dc1a16";
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,9 +73,9 @@ public class WeatherFragment extends Fragment {
                 container, false);
 
         // Assign variable
-//        btLocation = view.findViewById(R.id.bt_location);
-//        tvLatitude = view.findViewById(R.id.tv_latitude);
-//        tvLongitude = view.findViewById(R.id.tv_longitude);
+        btLocation = view.findViewById(R.id.bt_location);
+        tvLatitude = view.findViewById(R.id.tv_latitude);
+        tvLongitude = view.findViewById(R.id.tv_longitude);
         tvtemperature = view.findViewById(R.id.tv_temperature);
         tvHumidity = view.findViewById(R.id.tv_humidity);
         tvPressure = view.findViewById(R.id.tv_pressure);
@@ -86,41 +90,41 @@ public class WeatherFragment extends Fragment {
         // Initialize location client
         client = LocationServices.getFusedLocationProviderClient(getActivity());
         // Inflate the layout for this fragment
-//        btLocation.setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view)
-//                    {
-//                        //getWeatherUpdate();
-//                        // check condition
-//                        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission
-//                                        .ACCESS_FINE_LOCATION)
-//                                == PackageManager
-//                                .PERMISSION_GRANTED
-//                                && ContextCompat.checkSelfPermission(
-//                                getActivity(),
-//                                Manifest.permission
-//                                        .ACCESS_COARSE_LOCATION)
-//                                == PackageManager
-//                                .PERMISSION_GRANTED) {
-//                            // When permission is granted
-//                            // Call method
-//                            getCurrentLocation();
-//                            fetchWeather();
-//                        }
-//                        else {
-//                            // When permission is not granted
-//                            // Call method
-//                            requestPermissions(
-//                                    new String[] {
-//                                            Manifest.permission
-//                                                    .ACCESS_FINE_LOCATION,
-//                                            Manifest.permission
-//                                                    .ACCESS_COARSE_LOCATION },
-//                                    100);
-//                        }
-//                    }
-//                });
+        btLocation.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        //getWeatherUpdate();
+                        // check condition
+                        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission
+                                        .ACCESS_FINE_LOCATION)
+                                == PackageManager
+                                .PERMISSION_GRANTED
+                                && ContextCompat.checkSelfPermission(
+                                getActivity(),
+                                Manifest.permission
+                                        .ACCESS_COARSE_LOCATION)
+                                == PackageManager
+                                .PERMISSION_GRANTED) {
+                            // When permission is granted
+                            // Call method
+                            getCurrentLocation();
+                            fetchWeather();
+                        }
+                        else {
+                            // When permission is not granted
+                            // Call method
+                            requestPermissions(
+                                    new String[] {
+                                            Manifest.permission
+                                                    .ACCESS_FINE_LOCATION,
+                                            Manifest.permission
+                                                    .ACCESS_COARSE_LOCATION },
+                                    100);
+                        }
+                    }
+                });
 
         return view;
     }
@@ -134,7 +138,8 @@ public class WeatherFragment extends Fragment {
         // Check condition
         if (requestCode == 100 && (grantResults.length > 0)
                 && (grantResults[0] + grantResults[1]
-                == PackageManager.PERMISSION_GRANTED)) {
+                == PackageManager.PERMISSION_GRANTED)
+        ) {
             // When permission are granted
             // Call  method
             getCurrentLocation();
@@ -302,7 +307,7 @@ public class WeatherFragment extends Fragment {
                     String content = data.getString("main");
                     String description = data.getString("description");
                     String icon = data.getString("icon");
-                    tvWeather.setText(String.valueOf(content));
+                    tvWeather.setText(content);
 
                     //  Retrieving the wind values
                     JSONObject wind = new JSONObject(responseData).getJSONObject("wind");
@@ -324,14 +329,15 @@ public class WeatherFragment extends Fragment {
                     String country = sys.getString("country");
                     int sunrise = sys.getInt("sunrise");
                     int sunset = sys.getInt("sunset");
-                    tvCountry.setText(String.valueOf(country));
+                    tvCountry.setText(country);
 
 //                    Retrieving the name of the city
                     String city = new JSONObject(responseData).getJSONObject("name").toString();
                     tvCity.setText(String.valueOf(city));
                     System.out.println("THE RESPONSE FROM THE API IN JSON IS:" + sys + "CITY" + city + "visibility" + visibility);
                 }
-                else{
+                else
+                {
                     Log.d("Task not successful","error");
                 }
             } catch (IOException | JSONException e) {
