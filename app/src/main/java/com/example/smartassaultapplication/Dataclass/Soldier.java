@@ -1,4 +1,4 @@
-package com.example.smartassaultapplication.domain;
+package com.example.smartassaultapplication.Dataclass;
 
 public class Soldier {
     private String fullname;

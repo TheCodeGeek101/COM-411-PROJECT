@@ -1,9 +1,8 @@
-package com.example.smartassaultapplication;
+package com.example.smartassaultapplication.Activities;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -11,20 +10,12 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.smartassaultapplication.domain.NewsAdapter;
-import com.example.smartassaultapplication.domain.NewsData;
+import com.example.smartassaultapplication.Adapters.NewsAdapter;
+import com.example.smartassaultapplication.Adapters.NewsData;
+import com.example.smartassaultapplication.R;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class NewsFeedActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -53,45 +44,7 @@ public class NewsFeedActivity extends AppCompatActivity {
 
     private class UpdateTask extends AsyncTask<String, String, String> {
         protected String doInBackground(String... urls) {
-            try {
-                OkHttpClient client = new OkHttpClient();
-                Request request = new Request.Builder()
-                        .url("https://newsapi.org/v2/everything?q=tesla&from=2022-11-18&sortBy=publishedAt&apiKey=" + API_KEY)
-                        .get()
-                        .build();
-                Response response = client.newCall(request).execute();
-                if (response.isSuccessful()) {
-                    String responseData = response.body().string();
-                    System.out.println(responseData);
-                    Log.d("Response body:", responseData);
 
-
-                    //  Retrieving the weather values
-                    JSONArray articles = new JSONObject(responseData).getJSONArray("articles");
-                    System.out.println("-----------------THE ARTICLES ARRAY RETRIEVED ARE:::::::"+ articles);
-                    for (int i = 1; i < articles.length(); i++) {
-                        JSONObject data = articles.getJSONObject(i);
-                        System.out.println(data);
-                        NewsData newsData = new NewsData(
-                                data.getString("title"),
-                                data.getString("description"),
-                                data.getString("url"),
-                                data.getString("urlToImage"),
-                                imageView);
-                        newsDataList.add(newsData);
-                        String title = data.getString("title");
-                        String description = data.getString("description");
-                        String url = data.getString("url");
-                        String urlToImage = data.getString("urlToImage");
-                        String author = data.getString("author");
-                    }
-                } else {
-                    Log.d("Task not successful", "error");
-                }
-
-            } catch (JSONException | IOException jsonException) {
-                jsonException.printStackTrace();
-            }
 
             return null;
         }

@@ -1,4 +1,4 @@
-package com.example.smartassaultapplication;
+package com.example.smartassaultapplication.Activities;
 
 import static android.widget.Toast.LENGTH_LONG;
 
@@ -14,7 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.smartassaultapplication.domain.Soldier;
+import com.example.smartassaultapplication.Dataclass.Soldier;
+import com.example.smartassaultapplication.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;

@@ -1,4 +1,4 @@
-package com.example.smartassaultapplication.domain;
+package com.example.smartassaultapplication.Helpers;
 
 import android.app.Notification;
 import android.app.NotificationChannel;

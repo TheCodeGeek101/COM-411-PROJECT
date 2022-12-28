@@ -1,4 +1,4 @@
-package com.example.smartassaultapplication;
+package com.example.smartassaultapplication.Activities;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,6 +13,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.smartassaultapplication.Fragments.HomeFragment;
+import com.example.smartassaultapplication.Fragments.LocationFragment;
+import com.example.smartassaultapplication.Fragments.ProfileFragment;
+import com.example.smartassaultapplication.Fragments.WeatherFragment;
+import com.example.smartassaultapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,10 +40,65 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//            NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+//                    .findFragmentById(R.id.nav_host_fragment);
+//
+//            NavController navController = navHostFragment.getNavController();
+////            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+//            AppBarConfiguration appBarConfiguration =
+//                    new AppBarConfiguration.Builder(navController.getGraph())
+//                            .setDrawerLayout(drawerLayout)
+//                            .build();
+//
+//            Toolbar toolbar = findViewById(R.id.toolbar);
+//            if (toolbar == null) {
+//                // toolbar is null, so do something to handle this
+//
+//            } else {
+//                // toolbar is not null, so it is safe to call setupWithNavController
+//                NavigationUI.setupWithNavController(toolbar, navController,appBarConfiguration);
+//            }
+//            NavigationUI.setupWithNavController(
+//                    toolbar, navController, appBarConfiguration);
+
+
 //  layout = (RelativeLayout) findViewById(R.id.layout);
 //    configureNavigationDrawer();
 //    configureToolbar();
-        bottomNavigationView = findViewById(R.id.btnNav);
+
+//            Toolbar toolbar = findViewById(R.id.toolbar);
+//            setSupportActionBar(toolbar);
+//
+//            DrawerLayout drawer = findViewById(R.id.drawerLayout);
+//            ActionBar actionBar = getSupportActionBar();
+//            actionBar.setDisplayHomeAsUpEnabled(true);
+//            actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24);
+//
+//            NavigationView navigationView = findViewById(R.id.nav_drawer);
+//            navigationView.setNavigationItemSelectedListener(
+//                    new NavigationView.OnNavigationItemSelectedListener() {
+//                        @Override
+//                        public boolean onNavigationItemSelected(MenuItem menuItem) {
+//                            // set item as selected to persist highlight
+//                            menuItem.setChecked(true);
+//                            // close drawer when item is tapped
+//                            drawer.closeDrawers();
+//
+//                            // Add code here to update the UI based on the item selected
+//                            // For example, swap UI fragments here
+//
+//                            return true;
+//                        }
+//                    });
+//
+//            .setNavigationOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    drawer.openDrawer(GravityCompat.START);
+//                }
+//            });
+
+            bottomNavigationView = findViewById(R.id.btnNav);
 //
         fragmentReplace(new HomeFragment());
 
@@ -53,14 +113,12 @@ public class MainActivity extends AppCompatActivity {
                     fragmentReplace(new WeatherFragment());
                     break;
                 case R.id.maps:
-                    fragmentReplace(new MapsFragment());
+                    fragmentReplace(new LocationFragment());
                     break;
                 case R.id.profile:
                     fragmentReplace(new ProfileFragment());
                     break;
             }
-
-
             return true;
         });
         smartAssaultAuth = FirebaseAuth.getInstance();

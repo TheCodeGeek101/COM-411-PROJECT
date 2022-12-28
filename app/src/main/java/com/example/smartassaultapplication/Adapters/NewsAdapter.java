@@ -1,5 +1,6 @@
-package com.example.smartassaultapplication.domain;
+package com.example.smartassaultapplication.Adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.smartassaultapplication.Activities.NewsFeedActivity;
 import com.example.smartassaultapplication.R;
 import com.squareup.picasso.Picasso;
 
@@ -21,7 +23,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     public NewsAdapter(List<NewsData> newsDataList) {
         this.newsDataList = newsDataList;
     }
-
 
     @NonNull
     @Override
@@ -59,7 +60,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    Intent intent  = new Intent(itemView.getContext(), NewsFeedActivity.class);
+                    Intent intent  = new Intent(itemView.getContext(), NewsFeedActivity.class);
                 }
             });
         }

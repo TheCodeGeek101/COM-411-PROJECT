@@ -21,7 +21,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nav_open">Open</string>
+    <string name="description">
+        To view the map please click on the button below.
+        With this map you will be able to view the real-time
+        location changes which will be displayed as the person transitions
+    </string>
     <string name="nav_close">Close</string>
+    <string name="gps_track">view missions</string>
+    <string name="details">Profile Details</string>
 </resources>
 
 

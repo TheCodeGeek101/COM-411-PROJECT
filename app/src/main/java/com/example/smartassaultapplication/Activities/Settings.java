@@ -1,10 +1,10 @@
-package com.example.smartassaultapplication;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
+package com.example.smartassaultapplication.Activities;
 
 import android.os.Bundle;
-import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.smartassaultapplication.R;
 
 public class Settings extends AppCompatActivity {
 //     DrawerLayout drawerLayout;

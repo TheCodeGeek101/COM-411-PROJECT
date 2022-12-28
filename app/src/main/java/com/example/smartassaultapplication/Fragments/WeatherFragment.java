@@ -1,4 +1,4 @@
-package com.example.smartassaultapplication;
+package com.example.smartassaultapplication.Fragments;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
@@ -23,6 +24,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.smartassaultapplication.Activities.MainActivity;
+import com.example.smartassaultapplication.R;
 import com.example.smartassaultapplication.databinding.ActivityMainBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -109,7 +112,7 @@ public class WeatherFragment extends Fragment {
                                 .PERMISSION_GRANTED) {
                             // When permission is granted
                             // Call method
-                            getCurrentLocation();
+//                            getCurrentLocation();
                             fetchWeather();
                         }
                         else {
@@ -142,7 +145,7 @@ public class WeatherFragment extends Fragment {
         ) {
             // When permission are granted
             // Call  method
-            getCurrentLocation();
+//            getCurrentLocation();
         }
         else {
             // When permission are denied
@@ -232,9 +235,11 @@ public class WeatherFragment extends Fragment {
                                     Location location1 = locationResult.getLastLocation();
 //                                    getWeatherUpdate(location1);
                                     // Set latitude
-//                                    tvLatitude.setText(String.valueOf(location1.getLatitude()));
+                                    tvLatitude.setText(String.valueOf(location1.getLatitude()));
+//                                    new UpdateTask().execute(location1.getLatitude(),location1.getLongitude());
+
                                     // Set longitude
-//                                    tvLongitude.setText(String.valueOf(location1.getLongitude()));
+                                    tvLongitude.setText(String.valueOf(location1.getLongitude()));
 //                                    fetchWeather(location1.getLatitude(),location1.getLongitude());
                                 }
                             };
@@ -271,9 +276,11 @@ public class WeatherFragment extends Fragment {
             StrictMode.setThreadPolicy(policy);
             //your codes here
             OkHttpClient client = new OkHttpClient();
+            double lat = -15.3875913;
+            double lon = 35.3367807;
 
             Request request = new Request.Builder()
-                    .url("https://api.openweathermap.org/data/2.5/weather?lat=-15.387608&lon=35.33667641&appid="+ API_KEY)
+                    .url("https://api.openweathermap.org/data/2.5/weather?lat="+ lat +"&lon="+ lon +"&appid="+ API_KEY)
                     .get()
 //                .addHeader("lat", "-15.387608")
 //                .addHeader("lon", "35.33667641")
@@ -299,7 +306,7 @@ public class WeatherFragment extends Fragment {
                     tvPressure.setText(String.valueOf(pressure));
                     tvGroundlevel.setText(String.valueOf(groundLevel));
                     tvSealevel.setText(String.valueOf(seaLevel));
-                    
+
 
                     //  Retrieving the weather values
                     JSONArray weather = new JSONObject(responseData).getJSONArray("weather");
@@ -343,6 +350,19 @@ public class WeatherFragment extends Fragment {
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
+
+        }
+    }
+    private class UpdateTask extends AsyncTask<Double, Double, Double> {
+
+    protected Double doInBackground(Double  ... doubles) {
+
+
+            return null;
+        }
+
+        void getNewsFeed() {
+
 
         }
     }

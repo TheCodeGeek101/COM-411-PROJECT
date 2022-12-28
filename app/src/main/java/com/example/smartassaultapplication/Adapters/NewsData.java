@@ -1,4 +1,4 @@
-package com.example.smartassaultapplication.domain;
+package com.example.smartassaultapplication.Adapters;
 
 import android.widget.ImageView;
 
