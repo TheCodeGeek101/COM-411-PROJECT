@@ -2,8 +2,6 @@ package com.example.smartassaultapplication.Activities;
 
 import static android.widget.Toast.LENGTH_LONG;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
@@ -14,7 +12,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.smartassaultapplication.Dataclass.Soldier;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.smartassaultapplication.Domain.Soldier;
 import com.example.smartassaultapplication.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

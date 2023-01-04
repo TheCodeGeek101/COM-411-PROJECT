@@ -15,8 +15,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <include layout="@layout/toolbar" />
-
+<!--        <include layout="@layout/toolbar" />-->
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/toobar"
+            android:background="@color/colorMainBackground"
+            android:minHeight="?attr/actionBarTheme"
+            android:theme="?attr/actionBarTheme"
+            app:navigationIcon="@drawable/ic_baseline_menu_24"
+            />
         <!-- Main content -->
         <FrameLayout
             android:id="@+id/fragment_container"
@@ -31,18 +39,11 @@
     android:layout_height="match_parent"
     android:id="@+id/nav_drawer"
     app:headerLayout="@layout/header"
+    android:background="@color/edit"
     app:menu="@menu/drawer"
     android:layout_gravity="start"
     />
 
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/toobar"-->
-<!--        android:background="@color/toolbar"-->
-<!--        android:minHeight="?attr/actionBarTheme"-->
-<!--        android:theme="?attr/actionBarTheme"-->
-<!--        app:navigationIcon="@drawable/ic_baseline_menu_24"-->
-<!--        />-->
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

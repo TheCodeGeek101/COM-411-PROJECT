@@ -19,8 +19,10 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.example.smartassaultapplication.Helpers.GeofenceHelper;
 import com.example.smartassaultapplication.R;
+import com.example.smartassaultapplication.Services.ActivityRecognitionService;
 import com.example.smartassaultapplication.Services.GeofenceBroadcastReceiver;
 import com.example.smartassaultapplication.databinding.ActivityMaps2Binding;
+import com.google.android.gms.location.ActivityRecognitionClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
@@ -37,6 +39,9 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 
@@ -57,12 +62,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final String TAG = "MapsActivity";
     Marker userLocationMarker;
     PendingIntent pendingIntent;
-    private float GEOFENCE_RADIUS = 30;
+    private float GEOFENCE_RADIUS = 100;
     FusedLocationProviderClient fusedLocationProviderClient;
     ArrayList<Geofence> geofenceList = new ArrayList<Geofence>();
     Geofence geofence;
 //    FirebaseDatabase database;
 //    DatabaseReference ref;
+    private ActivityRecognitionClient mActivityRecognitionClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,9 +76,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         binding.set(ActivityMaps2Binding.inflate(getLayoutInflater()));
         setContentView(binding.get().getRoot());
+        geofencingClient = LocationServices.getGeofencingClient(this);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 //        database = FirebaseDatabase.getInstance();
 //        ref = database.getReference("coordinates");
+
+        mActivityRecognitionClient = new ActivityRecognitionClient(this);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -217,6 +226,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     return;
                 }
                 mMap.setMyLocationEnabled(true);
+                requestActivityRecognitionUpdates();
             } else {
 
             }
@@ -228,6 +238,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Toast.makeText(this, "Could not establish geofence due to lack of background access location permission...", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+    private void requestActivityRecognitionUpdates()
+    {
+        Intent intent = new Intent(this, ActivityRecognitionService.class);
+        PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        @SuppressLint("MissingPermission") Task<Void> task = mActivityRecognitionClient.requestActivityUpdates(3000, pendingIntent);
+
+        task.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void result) {
+                // Activity updates requested
+            }
+        });
+
+        task.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // Request failed
+            }
+        });
+
     }
 
     //    adding a marker to the users location
@@ -269,6 +301,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapLongClick(@NonNull LatLng latLng) {
+        createGeofence(latLng);
 
         if(Build.VERSION.SDK_INT >= 29){
 //                    ask for permisssion
@@ -289,16 +322,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
         else{
-            createGeofence(latLng);
         }
 //
     }
 
     public void createGeofence(LatLng latLng) {
-        mMap.clear();
         addMaker(latLng);
         addCircle(latLng, GEOFENCE_RADIUS);
         addGeofence(latLng, GEOFENCE_RADIUS);
+        mMap.clear();
 
     }
 

@@ -1,4 +1,4 @@
-package com.example.smartassaultapplication.Dataclass;
+package com.example.smartassaultapplication.Domain;
 
 public class Weather {
    private int id;

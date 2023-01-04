@@ -11,11 +11,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.smartassaultapplication.Activities.MapsActivity;
 import com.example.smartassaultapplication.R;
-import com.example.smartassaultapplication.Dataclass.Coordinates;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,27 +67,28 @@ public class LocationFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_location, container, false);
         btnMaps = view.findViewById(R.id.bt_maps);
-        btnMaps.setOnClickListener(view1 -> MoveToMaps());
+        btnMaps.setOnClickListener(view1 -> moveToMaps());
 //         database= FirebaseDatabase.getInstance();
 //         ref = database.getReference("coordinates");
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_location, container, false);
+        return view;
     }
 
-    private void MoveToMaps() {
-        Random rand = new Random();
+    private void moveToMaps() {
+//        Random rand = new Random();
 
         // Generate a random latitude coordinate
-        double lat = (rand.nextDouble() * 180) - 90;
+//        double lat = (rand.nextDouble() * 180) - 90;
 
         // Generate a random longitude coordinate
-        double lng = (rand.nextDouble() * 360) - 180;
+//        double lng = (rand.nextDouble() * 360) - 180;
 //        LatLng latLng = new LatLng(lat,lng);
-        Coordinates coordinates = new Coordinates(lat,lng);
+//        Coordinates coordinates = new Coordinates(lat,lng);
 
         // Save the coordinate to the database
 //        ref.setValue(coordinates);
-        Intent intent = new Intent(getActivity(), MapsActivity.class);
+        Intent intent = new Intent(getContext(), MapsActivity.class);
         startActivity(intent);
+//        finish();
     }
 }

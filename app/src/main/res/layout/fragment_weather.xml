@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:paddingTop="50dp"
+    android:id="@+id/weatherFragment"
     tools:context=".Fragments.WeatherFragment">
 
 <LinearLayout
@@ -53,63 +54,7 @@
         android:columnCount="2"
         android:rowCount="5">
 
-        <androidx.cardview.widget.CardView
-            android:layout_marginTop="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_columnSpan="2"
-            android:layout_column="0"
-            android:layout_gravity="fill"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="15dp"
-            app:cardCornerRadius="8dp"
-            app:cardBackgroundColor="@color/colorMissions"
-            android:background="@drawable/missions"
-            app:cardElevation="8dp"
-            >
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_gravity="center">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Location"
-                    android:textAllCaps="true"
-                    android:textStyle="bold"
-                    android:textSize="25dp"
-                    />
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/tv_country"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="clear"
-                        android:textColor="@color/white"
-                        android:textSize="24sp"
-                        />
-                    <TextView
-                        android:id="@+id/tv_city"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="clear"
-                        android:textColor="@color/white"
-                        android:textSize="24sp" />
-
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
@@ -139,6 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/temperature"
+                    android:textColor="@color/white"
                     android:textSize="19dp" />
 
                 <LinearLayout
@@ -184,6 +130,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/ground_level"
+                    android:textColor="@color/white"
                     android:textSize="22dp" />
 
                 <TextView
@@ -224,6 +171,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/pressure"
+                    android:textColor="@color/white"
                     android:textSize="22dp" />
 
                 <TextView
@@ -299,6 +247,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/humidity"
+                    android:textColor="@color/white"
                     android:textSize="22dp" />
 
                 <TextView
@@ -336,6 +285,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/weather"
+                    android:textColor="@color/white"
                     android:textSize="22dp" />
 
                 <TextView
@@ -373,6 +323,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/sea_level"
+                    android:textColor="@color/white"
                     android:textSize="22dp" />
 
                 <TextView
@@ -411,6 +362,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/coordinates"
+                    android:textColor="@color/white"
                     android:textSize="22dp" />
                 <LinearLayout
                     android:layout_width="wrap_content"

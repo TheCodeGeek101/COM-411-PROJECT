@@ -1,4 +1,4 @@
-package com.example.smartassaultapplication.Dataclass;
+package com.example.smartassaultapplication.Domain;
 
 import com.google.gson.annotations.SerializedName;
 

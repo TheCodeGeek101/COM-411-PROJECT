@@ -84,8 +84,6 @@ public class WeatherFragment extends Fragment {
         tvPressure = view.findViewById(R.id.tv_pressure);
         tvGroundlevel = view.findViewById(R.id.tv_groundLevel);
         tvSealevel = view.findViewById(R.id.tv_seaLevel);
-        tvCity = view.findViewById(R.id.tv_city);
-        tvCountry = view.findViewById(R.id.tv_country);
         tvWeather = view.findViewById(R.id.tv_weather);
         
 
@@ -112,7 +110,7 @@ public class WeatherFragment extends Fragment {
                                 .PERMISSION_GRANTED) {
                             // When permission is granted
                             // Call method
-//                            getCurrentLocation();
+                            getCurrentLocation();
                             fetchWeather();
                         }
                         else {

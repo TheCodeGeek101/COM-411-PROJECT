@@ -12,10 +12,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.example.smartassaultapplication.Fragments.HomeFragment;
 import com.example.smartassaultapplication.Fragments.LocationFragment;
@@ -46,24 +42,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 //            NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
 //                    .findFragmentById(R.id.nav_host_fragment);
-//
+
 //            NavController navController = navHostFragment.getNavController();
-            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-            AppBarConfiguration appBarConfiguration =
-                    new AppBarConfiguration.Builder(navController.getGraph())
-                            .setDrawerLayout(drawerLayout)
-                            .build();
-
-            Toolbar toolbar = findViewById(R.id.toolbar);
-            if (toolbar == null) {
-                // toolbar is null, so do something to handle this
-
-            } else {
-                // toolbar is not null, so it is safe to call setupWithNavController
-                NavigationUI.setupWithNavController(toolbar, navController,appBarConfiguration);
-            }
-            NavigationUI.setupWithNavController(
-                    toolbar, navController, appBarConfiguration);
+//            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+//            AppBarConfiguration appBarConfiguration =
+//                    new AppBarConfiguration.Builder(navController.getGraph())
+//                            .setDrawerLayout(drawerLayout)
+//                            .build();
+//
+//            Toolbar toolbar = findViewById(R.id.toolbar);
+//            if (toolbar == null) {
+//                // toolbar is null, so do something to handle this
+//
+//            } else {
+//                // toolbar is not null, so it is safe to call setupWithNavController
+//                NavigationUI.setupWithNavController(toolbar, navController,appBarConfiguration);
+//            }
+//            NavigationUI.setupWithNavController(
+//                    toolbar, navController, appBarConfiguration);
 
 
 //  layout = (RelativeLayout) findViewById(R.id.layout);
@@ -156,9 +152,9 @@ public class MainActivity extends AppCompatActivity {
 //
 //            }
 //        });
-//
-//
-//
+
+
+
 
     }
     @Override

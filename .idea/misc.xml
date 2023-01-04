@@ -9,19 +9,23 @@
         <entry key="..\:/Users/Tiya Tizifa/StudioProjects/SmartAssaultapplication/app/src/main/res/drawable/ic_baseline_security_24.xml" value="0.197" />
         <entry key="..\:/Users/Tiya Tizifa/StudioProjects/SmartAssaultapplication/app/src/main/res/drawable/layoutgradient.xml" value="0.1955" />
         <entry key="..\:/Users/Tiya Tizifa/StudioProjects/SmartAssaultapplication/app/src/main/res/layout/activity_edit_profile.xml" value="0.22" />
+        <entry key="..\:/Users/Tiya Tizifa/StudioProjects/SmartAssaultapplication/app/src/main/res/layout/activity_login.xml" value="0.19610507246376813" />
         <entry key="..\:/Users/Tiya Tizifa/StudioProjects/SmartAssaultapplication/app/src/main/res/layout/activity_main.xml" value="0.21" />
         <entry key="..\:/Users/Tiya Tizifa/StudioProjects/SmartAssaultapplication/app/src/main/res/layout/activity_news_feed.xml" value="0.12892119357306808" />
         <entry key="..\:/Users/Tiya Tizifa/StudioProjects/SmartAssaultapplication/app/src/main/res/layout/activity_register.xml" value="0.20516304347826086" />
         <entry key="..\:/Users/Tiya Tizifa/StudioProjects/SmartAssaultapplication/app/src/main/res/layout/activity_settings.xml" value="0.33" />
-        <entry key="..\:/Users/Tiya Tizifa/StudioProjects/SmartAssaultapplication/app/src/main/res/layout/fragment_home.xml" value="0.11202185792349727" />
-        <entry key="..\:/Users/Tiya Tizifa/StudioProjects/SmartAssaultapplication/app/src/main/res/layout/fragment_location.xml" value="0.1721311475409836" />
+        <entry key="..\:/Users/Tiya Tizifa/StudioProjects/SmartAssaultapplication/app/src/main/res/layout/fragment_home.xml" value="0.14" />
+        <entry key="..\:/Users/Tiya Tizifa/StudioProjects/SmartAssaultapplication/app/src/main/res/layout/fragment_location.xml" value="0.33" />
         <entry key="..\:/Users/Tiya Tizifa/StudioProjects/SmartAssaultapplication/app/src/main/res/layout/fragment_mapps.xml" value="0.20199275362318841" />
         <entry key="..\:/Users/Tiya Tizifa/StudioProjects/SmartAssaultapplication/app/src/main/res/layout/fragment_maps.xml" value="0.12892119357306808" />
-        <entry key="..\:/Users/Tiya Tizifa/StudioProjects/SmartAssaultapplication/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
-        <entry key="..\:/Users/Tiya Tizifa/StudioProjects/SmartAssaultapplication/app/src/main/res/layout/fragment_weather.xml" value="0.12892119357306808" />
+        <entry key="..\:/Users/Tiya Tizifa/StudioProjects/SmartAssaultapplication/app/src/main/res/layout/fragment_profile.xml" value="0.22" />
+        <entry key="..\:/Users/Tiya Tizifa/StudioProjects/SmartAssaultapplication/app/src/main/res/layout/fragment_weather.xml" value="0.2" />
+        <entry key="..\:/Users/Tiya Tizifa/StudioProjects/SmartAssaultapplication/app/src/main/res/layout/header.xml" value="0.20516304347826086" />
         <entry key="..\:/Users/Tiya Tizifa/StudioProjects/SmartAssaultapplication/app/src/main/res/layout/main_navigation_drawer.xml" value="0.33" />
         <entry key="..\:/Users/Tiya Tizifa/StudioProjects/SmartAssaultapplication/app/src/main/res/layout/main_toolbar.xml" value="0.12892119357306808" />
+        <entry key="..\:/Users/Tiya Tizifa/StudioProjects/SmartAssaultapplication/app/src/main/res/layout/news_list_row.xml" value="0.19610507246376813" />
         <entry key="..\:/Users/Tiya Tizifa/StudioProjects/SmartAssaultapplication/app/src/main/res/layout/toolbar.xml" value="0.12892119357306808" />
+        <entry key="..\:/Users/Tiya Tizifa/StudioProjects/SmartAssaultapplication/app/src/main/res/menu/drawer.xml" value="0.24561403508771928" />
       </map>
     </option>
   </component>
